@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+```
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register Land | Sempulam</title>
+
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+```
+
+</head>
+
+<body>
+
+<div class="form-page">
+
+```
+<div class="form-container">
+
+    <div class="form-header">
+
+        <div class="form-brand">
+            SEMPULAM
+        </div>
+
+        <div class="step-indicator">
+            STEP 2 OF 3
+        </div>
+
+        <h1>Register Your Land</h1>
+
+        <p>
+            Tell us about the land where you plan to cultivate.
+        </p>
+
+    </div>
+
+
+    <div class="farmer-summary">
+
+        <span class="summary-label">
+            FARMER
+        </span>
+
+        <strong>
+            {{ farmer.name }}
+        </strong>
+
+        <span>
+            {{ farmer.email }}
+        </span>
+
+    </div>
+
+
+    <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="form-fields">
+
+            {{ form.as_p }}
+
+        </div>
+
+
+        <button type="submit" class="form-submit">
+            Save Land & Continue
+        </button>
+
+    </form>
+
+
+    <div class="form-footer">
+
+        <p>
+            Your land information will be used to create
+            agricultural opportunities on Sempulam.
+        </p>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Requests | Sempulam</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+        <div>
+            <div class="brand">Sempulam</div>
+            <h1 class="dashboard-title">Investment Requests</h1>
+            <p class="dashboard-subtitle">
+                Welcome, {{ farmer.name }}. Review investors interested in your crops.
+            </p>
+        </div>
+        <a href="{% url 'farmer_dashboard' %}" class="opportunity-btn"
+           style="width:auto; margin-top:0; text-decoration:none;">
+            Back to Dashboard
+        </a>
+    </div>
+
+    {% for item in investment_requests %}
+    <div class="farmer-card">
+
+        <div class="farmer-header">
+            <div>
+                <h2 class="farmer-name">{{ item.crop.crop_name }}</h2>
+                <p class="farmer-contact">
+                    Investor: {{ item.investor.name }}
+                    &nbsp; | &nbsp;
+                    {{ item.created_at|date:"d M Y, h:i A" }}
+                </p>
+            </div>
+
+            <strong>{{ item.get_status_display }}</strong>
+        </div>
+
+        <h3 class="section-title">Crop Details</h3>
+
+        <div class="land-info">
+            <div class="info-box">
+                <span class="info-label">Location</span>
+                <span class="info-value">{{ item.crop.land.location }}</span>
+            </div>
+            <div class="info-box">
+                <span class="info-label">Cultivation Area</span>
+                <span class="info-value">{{ item.crop.cultivation_area }} acres</span>
+            </div>
+            <div class="info-box">
+                <span class="info-label">Expected Quantity</span>
+                <span class="info-value">{{ item.crop.expected_quantity }}</span>
+            </div>
+            <div class="info-box">
+                <span class="info-label">Expected Harvest</span>
+                <span class="info-value">{{ item.crop.expected_harvest_date }}</span>
+            </div>
+        </div>
+
+        <h3 class="section-title">Investor Message</h3>
+        <p>
+            {% if item.message %}
+                {{ item.message|linebreaksbr }}
+            {% else %}
+                No message was provided.
+            {% endif %}
+        </p>
+
+        {% if item.status == "pending" %}
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px;">
+
+            <form method="POST"
+                  action="{% url 'update_investment_request' item.id 'accept' %}">
+                {% csrf_token %}
+                <button type="submit" class="opportunity-btn"
+                        style="width:auto; margin-top:0;">
+                    Accept Request
+                </button>
+            </form>
+
+            <form method="POST"
+                  action="{% url 'update_investment_request' item.id 'reject' %}">
+                {% csrf_token %}
+                <button type="submit" class="opportunity-btn"
+                        style="width:auto; margin-top:0; background:#a33b3b;">
+                    Decline Request
+                </button>
+            </form>
+
+        </div>
+        {% elif item.status == "accepted" %}
+            <p class="empty-message">
+                Request accepted. Document submission is the next step.
+            </p>
+        {% else %}
+            <p class="empty-message">
+                This investment request was declined.
+            </p>
+        {% endif %}
+
+    </div>
+
+    {% empty %}
+    <div class="farmer-card">
+        <h3>No investment requests yet</h3>
+        <p class="empty-message">
+            When an investor expresses interest in one of your crops,
+            their request will appear here.
+        </p>
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
+```

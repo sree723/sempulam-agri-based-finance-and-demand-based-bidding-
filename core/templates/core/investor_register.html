@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Investor Registration | Sempulam</title>
+
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+
+<body>
+
+<div class="form-page">
+
+    <div class="form-container">
+
+        <div class="form-header">
+
+            <div class="form-brand">
+                SEMPULAM
+            </div>
+
+            <div class="step-indicator">
+                INVESTOR REGISTRATION
+            </div>
+
+            <h1>Join as an Investor</h1>
+
+            <p>
+                Create your Sempulam investor profile and
+                discover agricultural opportunities.
+            </p>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-fields">
+
+                {{ form.as_p }}
+
+            </div>
+
+
+            <button type="submit" class="form-submit">
+                Create Investor Profile
+            </button>
+
+        </form>
+
+
+        <div class="form-footer">
+
+            <p>
+                Already have an investor account?
+                <a href="{% url 'investor_login' %}">
+                    Login here
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

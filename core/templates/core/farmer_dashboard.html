@@ -1,0 +1,220 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sempulam | Farmer Dashboard</title>
+
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+
+<body class="farmer-dashboard-page">
+
+<header class="sd-topbar">
+    <a href="{% url 'home' %}" class="sd-brand">
+        <span class="sd-brand-mark">S</span>
+        <span>Sempulam<small>GROWING TOGETHER</small></span>
+    </a>
+
+    <div class="sd-topbar-right">
+        <span class="sd-role">Farmer Portal</span>
+        <a href="{% url 'farmer_investment_requests' %}"
+           class="sd-request-link">
+            Investment Requests
+        </a>
+        <a href="{% url 'user_logout' %}" class="sd-logout">Log out</a>
+    </div>
+</header>
+
+<main class="sd-main">
+
+    <section class="sd-welcome">
+        <div class="sd-welcome-content">
+            <span class="sd-eyebrow">YOUR AGRICULTURAL WORKSPACE</span>
+
+            <h1>Welcome back, {{ farmer.name }}.</h1>
+
+            <p>
+                Your land, your crops, your next opportunity.
+                Manage your cultivation details in one place.
+            </p>
+
+            <a href="{% url 'farmer_investment_requests' %}"
+               class="sd-primary-btn">
+                Review investment requests <span>→</span>
+            </a>
+        </div>
+
+        <div class="sd-welcome-art" aria-hidden="true">
+            <span class="sd-art-circle"></span>
+            <span class="sd-art-leaf sd-leaf-one">✳</span>
+            <span class="sd-art-leaf sd-leaf-two">✦</span>
+            <span class="sd-art-text">Rooted in<br>the land.</span>
+        </div>
+    </section>
+
+    {% if messages %}
+    <div class="sd-messages">
+        {% for message in messages %}
+        <div class="sd-message {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="sd-profile">
+        <div class="sd-avatar">
+            {{ farmer.name|first|upper }}
+        </div>
+
+        <div class="sd-profile-info">
+            <span class="sd-overline">YOUR PROFILE</span>
+            <h2>{{ farmer.name }}</h2>
+            <p>{{ farmer.email }}</p>
+        </div>
+
+        <div class="sd-profile-contact">
+            <span>PHONE NUMBER</span>
+            <strong>{{ farmer.phone }}</strong>
+        </div>
+
+        <div class="sd-profile-contact">
+            <span>ADDRESS</span>
+            <strong>{{ farmer.address }}</strong>
+        </div>
+    </section>
+
+    <section class="sd-section">
+        <div class="sd-section-heading">
+            <div>
+                <span class="sd-overline">YOUR FARM</span>
+                <h2>Land & cultivation</h2>
+                <p>Explore your registered land and the crops growing on it.</p>
+            </div>
+
+            <div class="sd-count">
+                {{ farmer.lands.count }} land{{ farmer.lands.count|pluralize }}
+            </div>
+        </div>
+
+        <div class="sd-land-grid">
+
+            {% for land in farmer.lands.all %}
+
+            <article class="sd-land-card">
+
+                <div class="sd-land-image">
+                    {% if land.land_photo %}
+                        <img src="{{ land.land_photo.url }}"
+                             alt="Land at {{ land.location }}">
+                    {% else %}
+                        <div class="sd-image-placeholder">
+                            <span>✳</span>
+                            <p>Growing starts here</p>
+                        </div>
+                    {% endif %}
+
+                    <span class="sd-land-badge">
+                        {{ land.area_acres }} acres
+                    </span>
+                </div>
+
+                <div class="sd-land-body">
+                    <span class="sd-overline">{{ land.district }}, {{ land.state }}</span>
+                    <h3>{{ land.location }}</h3>
+
+                    <div class="sd-land-facts">
+                        <div>
+                            <span>LAND AREA</span>
+                            <strong>{{ land.area_acres }} acres</strong>
+                        </div>
+                        <div>
+                            <span>SOIL TYPE</span>
+                            <strong>{{ land.soil_type }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="sd-crops-heading">
+                        <h4>Crops on this land</h4>
+                        <span>{{ land.crops.count }}</span>
+                    </div>
+
+                    {% for crop in land.crops.all %}
+
+                    <div class="sd-crop-card">
+                        <div class="sd-crop-icon">✳</div>
+
+                        <div class="sd-crop-main">
+                            <h5>{{ crop.crop_name }}</h5>
+                            <p>
+                                {% if crop.variety %}
+                                    {{ crop.variety }}
+                                {% else %}
+                                    Crop variety not specified
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="sd-crop-price">
+                            <span>EXPECTED PRICE</span>
+                            <strong>₹{{ crop.expected_selling_price }}</strong>
+                        </div>
+
+                        <div class="sd-crop-details">
+                            <div>
+                                <span>Cultivation area</span>
+                                <strong>{{ crop.cultivation_area }} acres</strong>
+                            </div>
+                            <div>
+                                <span>Expected quantity</span>
+                                <strong>{{ crop.expected_quantity }}</strong>
+                            </div>
+                            <div>
+                                <span>Harvest date</span>
+                                <strong>{{ crop.expected_harvest_date|date:"d M Y" }}</strong>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'investment_opportunity' crop.id %}"
+                           class="sd-opportunity-btn">
+                            View crop details <span>→</span>
+                        </a>
+                    </div>
+
+                    {% empty %}
+                    <div class="sd-empty-crops">
+                        <p>No crops registered on this land yet.</p>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </article>
+
+            {% empty %}
+
+            <div class="sd-empty-land">
+                <span class="sd-empty-icon">✳</span>
+                <h3>Your farm journey starts here</h3>
+                <p>You haven't registered any land yet.</p>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </section>
+
+    <footer class="sd-footer">
+        <a href="{% url 'home' %}" class="sd-brand sd-footer-brand">
+            <span class="sd-brand-mark">S</span>
+            <span>Sempulam<small>GROWING TOGETHER</small></span>
+        </a>
+        <p>Supporting farmers. Growing opportunities.</p>
+    </footer>
+
+</main>
+</body>
+</html>

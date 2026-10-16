@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sempulam | Crop Registration</title>
+
+    <link rel="stylesheet"
+          href="{% static 'core/style.css' %}">
+</head>
+
+<body>
+
+<div class="form-page">
+
+    <div class="form-container">
+
+        <div class="form-header">
+
+            <div class="form-brand">
+                SEMPULAM
+            </div>
+
+            <h1>Register Your Crop</h1>
+
+            <p>
+                Tell us about the crop you plan to cultivate
+                on your registered land.
+            </p>
+
+        </div>
+
+
+        <div class="land-summary">
+
+            <h3>Land Details</h3>
+
+            <p>
+                <strong>Location:</strong>
+                {{ land.location }}
+            </p>
+
+            <p>
+                <strong>District:</strong>
+                {{ land.district }}
+            </p>
+
+            <p>
+                <strong>Area:</strong>
+                {{ land.area_acres }} acres
+            </p>
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="form-submit">
+                Register Crop
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

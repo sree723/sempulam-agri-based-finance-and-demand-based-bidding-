@@ -1,0 +1,224 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ crop.crop_name }} | Sempulam</title>
+
+    <link rel="stylesheet"
+          href="{% static 'core/style.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <div class="brand">
+                Sempulam
+            </div>
+
+            <h1 class="dashboard-title">
+                Investment Opportunity
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Explore this agricultural investment opportunity.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="farmer-card">
+
+        <div class="farmer-header">
+
+            <div>
+
+                <h2 class="farmer-name">
+                    {{ crop.crop_name }}
+                </h2>
+
+                <p class="farmer-contact">
+                    Farmer: {{ crop.land.farmer.name }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <h3 class="section-title">
+            Farmer Details
+        </h3>
+
+        <div class="land-info">
+
+            <div class="info-box">
+                <span class="info-label">Farmer</span>
+                <span class="info-value">
+                    {{ crop.land.farmer.name }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">Location</span>
+                <span class="info-value">
+                    {{ crop.land.location }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">District</span>
+                <span class="info-value">
+                    {{ crop.land.district }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">State</span>
+                <span class="info-value">
+                    {{ crop.land.state }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <h3 class="section-title">
+            Land & Cultivation Details
+        </h3>
+
+        <div class="land-info">
+
+            <div class="info-box">
+                <span class="info-label">Total Land</span>
+                <span class="info-value">
+                    {{ crop.land.area_acres }} acres
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">Soil Type</span>
+                <span class="info-value">
+                    {{ crop.land.soil_type }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">Cultivation Area</span>
+                <span class="info-value">
+                    {{ crop.cultivation_area }} acres
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">Crop Variety</span>
+                <span class="info-value">
+                    {{ crop.variety }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <h3 class="section-title">
+            Expected Production
+        </h3>
+
+        <div class="land-info">
+
+            <div class="info-box">
+                <span class="info-label">
+                    Expected Quantity
+                </span>
+
+                <span class="info-value">
+                    {{ crop.expected_quantity }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">
+                    Expected Selling Price
+                </span>
+
+                <span class="info-value">
+                    ₹{{ crop.expected_selling_price }}
+                </span>
+            </div>
+
+            <div class="info-box">
+                <span class="info-label">
+                    Expected Harvest
+                </span>
+
+                <span class="info-value">
+                    {{ crop.expected_harvest_date }}
+                </span>
+            </div>
+
+        </div>
+
+
+        <form
+    method="POST"
+    action="{% url 'send_investment_request' crop.id %}"
+>
+
+    {% csrf_token %}
+
+    <h3 class="section-title">
+        Contact Farmer
+    </h3>
+
+    <p class="dashboard-subtitle">
+        Send a message to the farmer expressing your interest
+        in this agricultural opportunity.
+    </p>
+
+    <textarea
+        name="message"
+        placeholder="Write a message to the farmer..."
+        rows="5"
+        style="
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: 1px solid #dfe7dc;
+            border-radius: 10px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+        "
+    ></textarea>
+
+    <button
+        type="submit"
+        class="opportunity-btn"
+    >
+        Send Investment Request
+    </button>
+
+</form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

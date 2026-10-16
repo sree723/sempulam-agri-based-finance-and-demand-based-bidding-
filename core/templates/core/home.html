@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Sempulam | Agricultural Partnership</title>
+
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+```
+
+</head>
+
+<body>
+
+```
+<nav class="navbar">
+    <div class="logo">SEMPULAM</div>
+
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">How It Works</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <!-- Login will later open Farmer / Investor choice -->
+    <a href="/login/" class="login-btn">
+        Login
+    </a>
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="tagline">
+            DEMAND DRIVEN AGRICULTURAL PARTNERSHIP
+        </p>
+
+        <h1>
+            Growing Together.<br>
+            Investing in Agriculture.
+        </h1>
+
+        <p class="description">
+            Sempulam connects farmers with investors,
+            helping transform agricultural opportunities
+            into sustainable partnerships.
+        </p>
+
+        <div class="hero-buttons">
+
+            <!-- Farmer goes to LOGIN first -->
+            <a href="{% url 'farmer_login' %}" class="primary-btn">
+                I'm a Farmer
+            </a>
+
+            <!-- Investor goes to REGISTRATION -->
+            <a href="{% url 'investor_register' %}" class="secondary-btn">
+    I'm an Investor
+</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <h2>How Sempulam Works</h2>
+
+    <div class="feature-container">
+
+        <div class="feature-card">
+            <h3>01</h3>
+            <h4>Register Land</h4>
+            <p>
+                Farmers provide their land and cultivation details.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>02</h3>
+            <h4>Select Crop</h4>
+            <p>
+                Farmers select the crop they plan to cultivate.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>03</h3>
+            <h4>Create Opportunity</h4>
+            <p>
+                Farmers specify their investment requirement
+                and expected production.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>04</h3>
+            <h4>Connect With Investors</h4>
+            <p>
+                Investors can discover agricultural
+                opportunities and participate.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+```
+
+</body>
+</html>

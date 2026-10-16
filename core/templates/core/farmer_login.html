@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Login | Sempulam</title>
+
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+
+<body>
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            SEMPULAM
+        </div>
+
+        <h1>Farmer Login</h1>
+
+        <p class="auth-subtitle">
+            Login to manage your agricultural opportunities
+        </p>
+
+        {% if error %}
+            <div class="login-error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="auth-btn">
+                Login
+            </button>
+
+        </form>
+
+        <div class="register-link">
+            New farmer?
+            <a href="{% url 'register_farmer' %}">
+                Create an account
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

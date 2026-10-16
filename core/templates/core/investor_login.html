@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Investor Login | Sempulam</title>
+
+    <link rel="stylesheet"
+          href="{% static 'core/style.css' %}">
+
+</head>
+
+<body>
+
+<div class="form-page">
+
+    <div class="form-container">
+
+        <div class="form-header">
+
+            <div class="form-brand">
+                SEMPULAM
+            </div>
+
+            <div class="step-indicator">
+                INVESTOR
+            </div>
+
+            <h1>Welcome Back</h1>
+
+            <p>
+                Login to discover agricultural
+                investment opportunities.
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+            <div class="form-error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-fields">
+
+                <p>
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        required
+                    >
+                </p>
+
+
+                <p>
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    >
+                </p>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="form-submit">
+
+                Login as Investor
+
+            </button>
+
+        </form>
+
+
+        <div class="form-footer">
+
+            <p>
+                Don't have an investor account?
+                <a href="{% url 'investor_register' %}">
+                    Create one
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
